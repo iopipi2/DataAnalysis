@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication(exclude = {RedisRepositoriesAutoConfiguration.class})
+@SpringBootApplication()
 public class DataAnalysisApplication {
 
 	public static void main(String[] args) {

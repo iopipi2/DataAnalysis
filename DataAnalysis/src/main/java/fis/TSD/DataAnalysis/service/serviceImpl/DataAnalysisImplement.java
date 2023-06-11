@@ -23,7 +23,8 @@ public class DataAnalysisImplement implements DataAnalysisService {
     public List<DataAnalysis> getAllDataAnalysisByCurrentYear() {
         Date now= new Date();
         String year= String.valueOf(now.toInstant().atZone(ZoneId.systemDefault()).getYear());
-        List<DataAnalysis> dataAnalysisList= dataAnalysisRepository.getAllDataAnalysisByCurrentYear(year);
-        return null;
+        String ye= "2016";
+        List<DataAnalysis> dataAnalysisList= dataAnalysisRepository.getAllDataAnalysisByCurrentYear(ye);
+        return dataAnalysisList;
     }
 }

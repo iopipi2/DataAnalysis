@@ -1,16 +1,11 @@
 ########## HTTP encoding Configuration ##########
 server:
-  port: 8099
   servlet:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
   shutdown: graceful
-  tomcat:
-    max-http-form-post-size: 50MB
-    max-swallow-size: 50MB
-
 spring:
   application:
     name: data-analysis
@@ -22,6 +17,11 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+### Logging ###
+logging:
+  level:
+    com.zaxxer.hikari: debug
+    org.hibernate.sql: debug
 
 
 
