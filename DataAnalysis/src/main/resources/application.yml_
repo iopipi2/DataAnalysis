@@ -1,0 +1,165 @@
+########## HTTP encoding Configuration ##########
+server:
+  port: 8094
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  shutdown: graceful
+  tomcat:
+    max-http-form-post-size: 50MB
+    max-swallow-size: 50MB
+
+spring:
+  application:
+    name: business-process-service
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  ########## Redis Configuration ##########
+
+  ########## Kafka Configuration ##########
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+
+  task:
+    scheduling:
+      pool:
+        size: 10
+
+management:
+  health:
+    redis:
+      enabled: false
+
+# logging
+logging:
+  level:
+    io:
+      lettuce: info
+      netty: info
+
+########## Multitenant Configuration ##########
+speedfrwk:
+  singletenant:
+    setupDatabaseOnStart: false
+    datasource:
+      #      url: jdbc:mysql://localhost:3306/ctshippertest0001gmailcom26092022?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      #      username: root
+      #      password: Gvk37u6gP2OB6PvN7kWjqQ==
+      url: jdbc:mysql://103.174.217.135:3306/ctshippertest0001gmailcom13122022?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      username: clusteradmin
+      password: C/QFh73r9Ldxt1GuPf37/yNyPA3xMgHEz8SCOA5bJcY=
+      driverClassName: com.mysql.cj.jdbc.Driver
+      connectionTimeout: 60000
+      maxPoolSize: 100
+      idleTimeout: 300000
+      minIdle: 3
+      maxLifetime: 900000
+      poolName: masterdb-connection-pool
+      connectionTestQuery: SELECT 1
+      #      rootUsername: root
+      #      rootPassword: Gvk37u6gP2OB6PvN7kWjqQ==
+      rootUsername: clusteradmin
+      rootPassword: C/QFh73r9Ldxt1GuPf37/yNyPA3xMgHEz8SCOA5bJcY=
+    jpa:
+      repositoryPackage: vn.fis.spro.bpm.tenant.repository
+      entityPackages:
+        - vn.fis.spro.bpm.tenant.entity
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      showSql: true
+      formatSql: true
+      hbm2ddl: none
+      batchSize: 30
+    schema:
+      enabled: false
+      locations:
+        - classpath:/db/migration/mysql
+  keycloak:
+    realm: master
+    auth-server-url: http://103.174.217.129:8080/auth
+    ssl-required: none
+    resource: emp-eapp-app
+    use-resource-role-mappings: true
+    bearer-only: true
+    admin-username: admin
+    admin-password: admin
+    admin-client: admin-cli
+    admin-client-secret: JALGmYWkibL37hGZ6iJqzXRurSAIkhmS
+    app-realm: employee
+    app-client: emp-eapp-app
+    app-client-secret: 6GIo22MD0kkGstz0c1wp7XTCOWzjS5or
+    app-client-url: http://103.174.217.138/sign-in
+    access-token-lifespan: 1800
+    app-super-username: kiennt32@fpt.com.vn
+    app-super-userpass: bEdi5T/EkvhaSx01alAfEw==
+    app-admin-group: Administration
+    encrypted-pass: false
+    setup-on-start: false
+
+########## Keycloak Configuration ##########
+keycloak:
+  realm: master
+  auth-server-url: http://103.174.217.129:8080/auth
+  ssl-required: none
+  resource: emp-eapp-app
+  use-resource-role-mappings: true
+  bearer-only: true
+
+########## SPRO Configuration ##########
+spro:
+  default-page: 0
+  default-page-size: 10
+  service-urls:
+    gateway: http://localhost:8090
+    setting: http://localhost:8091/setting
+    subscription: http://localhost:8093/subscription
+    #    customer: http://api-gateway-fis-mbf-spro4-dev.apps.xplat.fis.com.vn/customer
+    customer: http://103.174.212.198/customer
+    business-process: http://localhost:8094/business-process
+    task: http://localhost:8080/task
+    #    bpm-engine: http://bpm-service-fis-mbf-spro4-dev.apps.xplat.fis.com.vn/engine-rest
+    bpm-engine: http://localhost:8888/engine-rest
+    storage-service: http://localhost:8080
+    #    bpm-service: http://bpm-service-fis-mbf-spro4-dev.apps.xplat.fis.com.vn
+    bpm-service: http://localhost:8888
+  api-paths:
+    customer-register: /tenant/tenantsBySelf
+  api-timeout: 30000
+  excel-header-number: 2
+  init-tenant-urls:
+    - http://localhost:8091/setting/tenant/initdata
+    - http://localhost:8093/subscription/tenant/initdata
+    - http://localhost:8094/business-process/tenant/initdata
+  storage:
+    url: https://s3-sgn09.fptcloud.com:443
+    access-key: 00f96b3466c8bb516030
+    secret-key: I53Vddwa/gIi2B6Psbo0M+TtCchZGX9Xd0rh1KS2
+  full-name-mode: VN
+  kafka:
+    topic-partitions: 1
+    topic-replicas: 1
+
+########## Scheduler Configuration ##########
+scheduler:
+  notification-push:
+    delay: 1000
+  api-log-task:
+    delay: 1000
+  reload-task:
+    cron: 0 0/15 * * * ?
+
+########## Other Configuration ##########
+kafka:
+  enabled: false
+action-api:
+  remove-additional-headers: false
+  always-allow-post-process: true
